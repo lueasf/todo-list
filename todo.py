@@ -20,7 +20,16 @@ def close_db(exc):
 
 @todo.route("/")
 def index():
-    return 'Le serveur est fonctionnel'
+    con = sqlite3.connect(DATABASE)
+    cur = con.cursor()
+    cur.execute('SELECT * FROM tasks')
+    con.commit()
+    con.close()
+    return render_template('index.html', )
 
-if __name__ == '__main__':
+@todo.route()
+def f():
+    pass
+
+if __name__ == "__main__":
     todo.run(debug=True)

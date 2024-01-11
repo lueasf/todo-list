@@ -1,0 +1,13 @@
+pour ce qui concerne l'app :
+
+.../add
+ajouter une tâche
+
+.../delete
+supprimer une tâche
+
+.../done
+completer une tâche
+
+.../liste
+contempler la liste
