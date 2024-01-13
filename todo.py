@@ -19,15 +19,20 @@ def close_db(exc):
         db.close()
 
 @todo.route("/")
-def index():
+def ok():
+    return "le serveur est fonctionnel"
+
+@todo.route("/all")
+def rall():
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute('SELECT * FROM tasks')
+    tasks = cur.fetchall()
     con.commit()
     con.close()
-    return render_template('index.html', )
+    return render_template('index.html', tasks=tasks)
 
-@todo.route()
+@todo.route("/add", methods=['POST','GET'])
 def f():
     pass
 

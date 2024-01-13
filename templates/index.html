@@ -4,4 +4,22 @@
         <title> TODO APP</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"
     </head>
+    <body>
+        <table>
+
+            <thead>
+                <tr>
+                    <th> Numéro de tache</th>
+                    <th> Contenu </th>
+                    <th> Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks%}
+                <tr>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </body>
 </html>
