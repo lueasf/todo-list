@@ -23,7 +23,7 @@ def ok():
     return "le serveur est fonctionnel"
 
 @todo.route("/all")
-def rall():
+def all():
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute('SELECT * FROM tasks')
@@ -33,13 +33,13 @@ def rall():
     return render_template('index.html', tasks=tasks)
 
 @todo.route("/add", methods=['POST','GET'])
-def f():
+def add():
     if request.method == 'POST':
         contenu = request.form.get('contenu')
         status = request.form['status']
         con = sqlite3.connect(DATABASE)
         cur = con.cursor()
-        cur.execte('INSERT INTO tasks (contenu, status) VALUES (?,?)', (contenu, status))
+        cur.execte('INSERT INTO tasks (id, contenu, status) VALUES (1, ?,?)', (contenu, status))
         con.commit()
         con.close()
         return redirect(url_for('rall'))

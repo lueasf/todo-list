@@ -5,15 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <title> TODO APP - Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 </head>
 <body>
-    <h1> Ajouter une tâche à la liste :</h1>
-    
+    <h1 class="ajout"> Ajouter une tâche à la liste :</h1>
+
     <form method='POST' action="{{url_for('add')}}">
-        <label for="content"> Contenu de la tache</label>
+        <label for="content"> Contenu de la tache :</label>
         <input type="text" name="content" id="content">
-        <label for="status"> Statut ( fait : 1, pas encore : 0 )</label>
-        <input type="text" name="status" id="status">
+        <label for="status"> Statut </label>
+        <input type="checkbox" name="status" id="status">
+        <button type="submit" value="Ajouter" </button>
         </form>
 </body>
 </html>

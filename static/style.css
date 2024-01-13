@@ -12,3 +12,24 @@ th {
 td { border: 1px solid #937fd6; 
     align-self: start;
 }
+
+.ajout {
+    width: 900px;
+    border: 3px solid #5810b0;
+    background-color: antiquewhite;
+    padding: 10px;
+}
+
+form {
+    width : 900px;
+    border: 3px solid #5810b0;
+    background-color: antiquewhite;
+    padding: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    margin: 5px;
+    
+}
