@@ -35,15 +35,24 @@ def all():
 @todo.route("/add", methods=['POST','GET'])
 def add():
     if request.method == 'POST':
-        contenu = request.form.get('contenu')
-        status = request.form['status']
+        contenu = request.form.get('contenu') #.get('') pour renvoyer None si inexistant
+        statut = 'Terminé' if request.form.get('statut') else 'Non terminé' #.form[''] pour renvoyer une erreur si inexistant
         con = sqlite3.connect(DATABASE)
         cur = con.cursor()
-        cur.execte('INSERT INTO tasks (id, contenu, status) VALUES (1, ?,?)', (contenu, status))
+        cur.execute('INSERT INTO tasks (contenu, statut) VALUES (?,?)', (contenu, statut))
         con.commit()
         con.close()
-        return redirect(url_for('rall'))
+        return redirect(url_for('all'))
     return render_template('add.html')
 
+@todo.route("/del/<int:id>")
+def delete(id):
+    con = sqlite3.connect(DATABASE)
+    cur = con.cursor()
+    cur.execute('DELETE FROM tasks WHERE id=?', (id,))
+    con.commit()
+    con.close()
+    return redirect(url_for('all'))
+
 if __name__ == "__main__":
-    todo.run(debug=True)
+    todo.run(debug=True, port=5454)

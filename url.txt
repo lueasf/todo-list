@@ -6,7 +6,7 @@ contempler la liste
 .../add
 ajouter une tâche
 
-.../delete
+.../del/<int:id>
 supprimer une tâche
 
 .../done
