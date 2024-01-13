@@ -35,8 +35,15 @@ def rall():
 @todo.route("/add", methods=['POST','GET'])
 def f():
     if request.method == 'POST':
-        return render_template('add.html')
-    return redirect(url_for('rall'))
+        contenu = request.form.get('contenu')
+        status = request.form['status']
+        con = sqlite3.connect(DATABASE)
+        cur = con.cursor()
+        cur.execte('INSERT INTO tasks (contenu, status) VALUES (?,?)', (contenu, status))
+        con.commit()
+        con.close()
+        return redirect(url_for('rall'))
+    return render_template('add.html')
 
 if __name__ == "__main__":
     todo.run(debug=True)
