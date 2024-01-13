@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, jsonify
 from flask import render_template, url_for, request, redirect
 import sqlite3
 
@@ -32,6 +32,15 @@ def all():
     con.close()
     return render_template('index.html', tasks=tasks)
 
+@todo.route("/api/all", methods=['GET'])
+def get_all():
+    con = sqlite3.connect(DATABASE)
+    cur = con.cursor()
+    cur.execute('SELECT * FROM tasks')
+    tasks = cur.fetchall()
+    con.close()
+    return jsonify({'tasks' : tasks})
+
 @todo.route("/add", methods=['POST','GET'])
 def add():
     if request.method == 'POST':
@@ -55,4 +64,4 @@ def delete(id):
     return redirect(url_for('all'))
 
 if __name__ == "__main__":
-    todo.run(debug=True, port=5454)
+    todo.run(debug=True)

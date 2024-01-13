@@ -7,14 +7,21 @@
     <title> TODO APP - Add</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 </head>
-<body>
+<body class="formu">
     <h1 class="ajout"> Ajouter une tâche à la liste :</h1>
 
     <form method='POST' action="{{url_for('add')}}">
-        <label for="contenu"> Contenu de la tache :</label>
-        <input type="text" name="contenu" id="contenu">
+        <label for="content"> Contenu de la tache :</label>
+        <input type="text" name="contenu" id="content">
+        <!-- name est important car il indique le nom de
+        la variable qui sera envoyée au serveur lorsque le 
+    form sera soumis-->
+    <!--l'attribut for dans label pointe vers l'attribut id
+    de input-->
+
         <label for="statut"> Statut </label>
         <input type="checkbox" name="statut" id="statut">
+
         <button type="submit"> Ajouter </button>
         </form>
 </body>

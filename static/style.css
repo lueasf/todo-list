@@ -16,14 +16,14 @@ td { border: 1px solid #937fd6;
 .ajout {
     width: 900px;
     border: 3px solid #5810b0;
-    background-color: antiquewhite;
+    background-color: rgb(233, 183, 230);
     padding: 10px;
 }
 
 form {
     width : 900px;
     border: 3px solid #5810b0;
-    background-color: antiquewhite;
+    background-color: rgb(233, 183, 230);
     padding: 10px;
 }
 
@@ -32,4 +32,8 @@ button {
     padding: 5px;
     margin: 5px;
 
+}
+
+.formu {
+    background-color: skyblue;   
 }

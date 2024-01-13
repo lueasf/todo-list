@@ -8,6 +8,3 @@ ajouter une tâche
 
 .../del/<int:id>
 supprimer une tâche
-
-.../done
-completer une tâche
