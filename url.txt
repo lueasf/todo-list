@@ -8,3 +8,15 @@ ajouter une tâche
 
 .../del/<int:id>
 supprimer une tâche
+
+.../login
+se connecter
+
+.../register
+s'enregister
+
+.../edit/<int:id>
+modifier une tâche
+
+.../api/all
+liste en JSON

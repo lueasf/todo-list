@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1> Enregistrez-vous sur la todo app :</h1>
-        <form>
+        <form method='POST' action="{{url_for('register')}}">
             <label for="username">Nom d'utilisateur :</label>
             <input type="text" id="userame" name="user_name" placeholder="Votre nom d'utilisateur">
 

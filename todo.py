@@ -32,10 +32,8 @@ def close_db(exc):
 def ok():
     return "le serveur est fonctionnel"
 
-@todo.route("/all")
+@todo.route("/all", methods=['GET','POST'])
 def all():
-    if 'username' not in session:
-        return redirect(url_for('login'))
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute('SELECT * FROM tasks')
@@ -47,7 +45,7 @@ def all():
 @todo.route("/api/all", methods=['GET'])
 def get_all():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('register'))
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute('SELECT * FROM tasks')
@@ -60,7 +58,7 @@ def get_all():
 @todo.route("/add", methods=['POST','GET'])
 def add():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('register'))
     if request.method == 'POST':
         contenu = request.form.get('contenu') #.get('') pour renvoyer None si inexistant
         statut = 'Terminé' if request.form.get('statut') else 'Non terminé' #.form[''] pour renvoyer une erreur si inexistant
@@ -74,12 +72,22 @@ def add():
 
 @todo.route("/edit/<int:id>", methods=['POST','GET'])
 def edit(id):
-    pass
+    if 'username' not in session:
+        return redirect(url_for('register'))
+    if request.method == 'POST':
+        contenu = request.form.get('contenu')
+        statut = 'Terminé' if request.form.get('statut') else 'Non terminé'
+        con = sqlite3.connect(DATABASE)
+        cur = con.cursor()
+        cur.execute('UPDATE tasks SET contenu=?, statut=? WHERE id=?', (contenu, statut, id))
+        con.commit()
+        con.close()
+        return redirect(url_for('all'))
 
 @todo.route("/del/<int:id>")
 def delete(id):
     if 'username' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('register'))
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute('DELETE FROM tasks WHERE id=?', (id,))
@@ -104,7 +112,19 @@ def register():
 
 @todo.route("/login", methods=['POST','GET'])
 def login():
-    return render_template('login.html')
+    if request.method == 'POST':
+        user_name = request.form.get('user_name')
+        user_password = request.form.get(' user_password')
+        con = sqlite3.conect(DATABASE)
+        cur = con.cursor()
+        cur.execute('SELECT * FROM user WHERE username=? AND password=?', (user_name, user_password))
+        user = cur.fetchone()
+        con.close()
+        if user:
+            session['username'] = user_name
+            return redirect(url_for('all'))
+        return redirect(url_for('login'))
+    return render_template('index.html')
 
 if __name__ == "__main__":
     todo.run(debug=True)
