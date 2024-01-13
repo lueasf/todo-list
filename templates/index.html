@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title> TODO APP</title>
+        <title> TODO APP - All</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"
     </head>
     <body>
         <table>
-
             <thead>
                 <tr>
                     <th> Numéro de tache</th>
@@ -17,8 +16,11 @@
             <tbody>
                 {% for task in tasks%}
                 <tr>
-                    
+                    <td> {{task[0]}} </td>
+                    <td> {{task[1]}} </td>
+                    <td> {{task[2]}} </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </body>
