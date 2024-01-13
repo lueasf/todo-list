@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+        <meta charset="utf-8">
+        <title>TODO APP - Inscription</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"> 
+    </head>
+    <body>
+        <h1> Enregistrez-vous sur la todo app :</h1>
+        <form>
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="userame" name="user_name" placeholder="Votre nom d'utilisateur">
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="user_password" placeholder="Votre mot de passe">
+
+            <button type="submit">S'inscrire</button> 
+        </form>  
+    </body>
+</html>
