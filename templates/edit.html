@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+</head>
+<body>
+
+<h2>Edit Task</h2>
+
+<form method="post">
+    <label for="contenu">New Content:</label>
+    <input type="text" id="contenu" name="contenu" value="{{ task.contenu }}" required>
+
+    <label for="statut">Statut:</label>
+    <input type="checkbox" id="statut" name="statut" {% if task.statut = 'Terminé' %}checked{% endif %}>
+
+    <button type="submit">Save Changes</button>
+</form>
+
+
+</body>
+</html>

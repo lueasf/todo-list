@@ -1,6 +1,6 @@
 from flask import Flask, g, jsonify
 from flask import render_template, url_for, request, redirect
-from flask import session
+from flask import session, abort
 from flask_session import Session
 import sqlite3
 
@@ -38,6 +38,10 @@ def close_db(exc):
 def ok():
     return "le serveur est fonctionnel"
 
+@todo.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
 @todo.route("/all", methods=['GET','POST'])
 def all():
     con = sqlite3.connect(DATABASE)
@@ -74,16 +78,21 @@ def add():
 
 @todo.route("/edit/<int:id>", methods=['POST','GET'])
 def edit(id):
+    con = sqlite3.connect(DATABASE)
+    cur = con.cursor()
     if request.method == 'POST':
         contenu = request.form.get('contenu')
         statut = 'Terminé' if request.form.get('statut') else 'Non terminé'
-        con = sqlite3.connect(DATABASE)
-        cur = con.cursor()
         cur.execute('UPDATE tasks SET contenu=?, statut=? WHERE id=?', (contenu, statut, id))
         con.commit()
         con.close()
         return redirect(url_for('all'))
-    return render_template('edit.html', id=id)
+    cur.execute('SELECT * FROM tasks WHERE id = ?', (id,))
+    task = cur.fetchone()
+    con.close()
+    if not task:
+        return render_template('404.html'), 404
+    return render_template('edit.html', task=task)
 
 @todo.route("/del/<int:id>")
 def delete(id):
