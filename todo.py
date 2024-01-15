@@ -1,4 +1,4 @@
-from flask import Flask, g, jsonify
+from flask import Flask, g, jsonify, session
 from flask import render_template, url_for, request, redirect
 from flask import session, abort
 from flask_session import Session
@@ -90,8 +90,10 @@ def edit(id):
     cur.execute('SELECT * FROM tasks WHERE id = ?', (id,))
     task = cur.fetchone()
     con.close()
+
     if not task:
         return render_template('404.html'), 404
+
     return render_template('edit.html', task=task)
 
 @todo.route("/del/<int:id>")
@@ -118,24 +120,24 @@ def register():
         cur.execute('INSERT INTO user (username, password) VALUES (?,?)', (user_name, user_password))
         con.commit()
         con.close()
+        session['username'] = user_name
         return redirect(url_for('all'))
     return render_template('register.html')
 
-@todo.route("/login", methods=['POST','GET'])
+@todo.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_name = request.form.get('user_name')
-        user_password = request.form.get('user_password')
-        con = sqlite3.connect(DATABASE)
-        cur = con.cursor()
-        cur.execute('SELECT * FROM user WHERE username=? AND password=?', (user_name, user_password))
-        user = cur.fetchone()
-        con.close()
-        if user:
-            session['username'] = user_name
-            return redirect(url_for('all'))
-        return redirect(url_for('login'))
-    return render_template('index.html')
+        username = request.form.get('username')
+        session['username'] = username
+        return redirect(url_for('home'))
+    return render_template('login.html')
+
+@todo.route('/check_login')
+def check_login():
+    if 'username' in session:
+        return 'True'
+    else:
+        return 'False'
 
 if __name__ == "__main__":
     todo.run(debug=True)
