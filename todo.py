@@ -129,7 +129,7 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         session['username'] = username
-        return redirect(url_for('home'))
+        return redirect(url_for('all'))
     return render_template('login.html')
 
 @todo.route('/check_login')
